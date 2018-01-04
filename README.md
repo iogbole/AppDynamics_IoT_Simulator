@@ -1,6 +1,6 @@
 # AppDynamics_IoT_Simulator
 
-This script simulates the instrumentation of an IoT application using the AppDynamics IoT RestAPI. 
+This script simulates the instrumentation of an IoT application using the AppDynamics IoT Rest APIs. 
 It sends IoT telemetries to AppDDynamics every minute. 
 
 ## The steps are: 
@@ -16,6 +16,6 @@ Each run generates different values for temperature and humidity
 2. Copy your AppKey from step 1. 
 3. Clone this repo
 4. Make the script executable : chmod +x iot.sh
-5. In your termainal, run:  ./iot.sh < appkey > for example ./iot.sh AB-CDE-FGH-IJK 
+5. In your termainal, run:  ./iot.sh paste-AppKey-here . For example: **_./iot.sh AB-CDE-FGH-IJK_** 
 6. Give it about 3 to 5 minutes and check your controller 
 

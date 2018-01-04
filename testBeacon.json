@@ -1,0 +1,57 @@
+[{
+	"deviceInfo": {
+		"deviceType": "Living Room Thermometer",
+		"deviceId": "io75d70d-a3f9-474b-bacf-0f4a57fa944c"
+	},
+	"customEvents": [{
+			"timestamp": 1510799434,
+			"eventType": "Temperature Reading",
+			"eventSummary": "Temperature: ° c",
+			"doubleProperties": {
+				"celsius": 25.0
+			}
+		},
+		{
+			"timestamp": 1510799434,
+			"eventType": "Humdity Reading",
+			"eventSummary": "Humidity",
+			"doubleProperties": {
+				"humidity": 50
+			}
+		}
+	],
+	"networkRequestEvents": [{
+			"timestamp": 1510799434,
+			"duration": 245,
+			"url": "https://iodockertest.com/v1/temperature",
+			"statusCode": 200,
+			"requestContentLength": 32,
+			"responseContentLength": 0,
+			"doubleProperties": {
+				"reportedTemperature": 25.0
+			}
+		},
+		{
+			"timestamp": 1510799434,
+			"duration": 300,
+			"url": "https://iodockertest.com/v1/humidity",
+			"statusCode": 200,
+			"requestContentLength": 32,
+			"responseContentLength": 0,
+			"doubleProperties": {
+				"reportedTemperature": 50
+			}
+		}
+	],
+	"errorEvents": [{
+			"timestamp": 1510799434,
+			"name": "SQLException",
+			"message": "open() failed because db is locked"
+		},
+		{
+			"timestamp": 1510799434,
+			"name": "DHT11 Malfunction",
+			"message": "Uknown DHT11 error"
+		}
+	]
+}]

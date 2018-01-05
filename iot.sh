@@ -3,13 +3,13 @@
 #API DOC: https://docs.appdynamics.com/javadocs/iot-rest-api/4.4/latest/ 
 
 
-#This script simulates the instrumentation of IoT an Application using the AppDynamics IoT RestAPI 
+#This script simulates the instrumentation of an IoT Application using the AppDynamics IoT Rest APIs 
 # The steps are: 
 #1. It checks to see if your AppKey exist and if it is enabled 
-#2. It validates the JSON request body format 
-#3. It sends IoT  telemetries i.e temp and humidity to AppD, including network requests and errors from sensors. 
+#2. It validates the JSON request body  
+#3. It sends IoT  telemetries i.e temp and humidity to AppD, including network requests and sensor errors. 
 # The script runs every minute
-#4. Each run generates different values from temperature and humidity 
+#4. Each run generate different values for temperature and humidity 
 
 #to run the script 
 

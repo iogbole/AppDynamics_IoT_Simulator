@@ -50,7 +50,7 @@
 		},
 		{
 			"timestamp": 1510799434,
-			"name": "DHT11 Malfunction",
+			"name": "DHT12 Malfunction",
 			"message": "Uknown DHT11 error"
 		}
 	]

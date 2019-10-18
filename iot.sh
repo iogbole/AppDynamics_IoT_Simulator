@@ -63,7 +63,8 @@ function send_telemetry {
     humidity=${RANDOM:0:2}
     temp_duration=${RANDOM:1:3}
     devise_id=$(sensorIDs)
-    new_beacon=$(cat $beacon_template_file | sed 's/"timestamp": 1571431290706/"timestamp": '"$time_stamp"'/g ; s/"celsius": 25.0/"celsius": '"$temperature.0"'/g ; s/"humidity": 50/"humidity": '"$humidity.0"'/g ; s/"duration": 245/"duration": '"$temp_duration"'/g ; s/"reportedTemperature": 25.0/"reportedTemperature": '"$temperature.0/g"'; s/"deviceId": "io75d70d-a3f9-474b-bacf-0f4a57fa944c"/"deviceId": "'"$devise_id"'"/g ')
+    echo "DeviceID $device_id"
+    new_beacon=$(cat $beacon_template_file | sed 's/"timestamp": 1571431290706/"timestamp": '"$time_stamp"'/g ; s/"celsius": 25.0/"celsius": '"$temperature.0"'/g ; s/"humidity": 50/"humidity": '"$humidity.0"'/g ; s/"duration": 245/"duration": '"$temp_duration"'/g ; s/"reportedTemperature": 25.0/"reportedTemperature": '"$temperature.0/g"'; s/"deviceId": "io-75"/"deviceId": "'"$device_id"'"/g ')
     echo $new_beacon  > new.json
     #new_validation=$(curl -s -o -X POST -d "$new_beacon" /dev/null -w '%{http_code}' $eum_host/application/$app_key/validate-beacons)
     #echo $new_validation

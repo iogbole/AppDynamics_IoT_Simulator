@@ -1,8 +1,9 @@
 [
  {
   "deviceInfo": {
-   "deviceType": "Thermostatio",
-   "deviceId": "io75d70d-a3f9-474b-bacf-0f4a57fa944c"
+   "deviceType": "io3",
+   "deviceId": "io-75",
+   "deviceName":"WeOne"
   },
   "versionInfo": {
     "hardwareVersion": "Board Rev. 13A",

@@ -62,7 +62,7 @@ function send_telemetry {
     temperature=${RANDOM:0:2}
     humidity=${RANDOM:0:2}
     temp_duration=${RANDOM:1:3}
-    devise_id=$(sensorIDs)
+    device_id=$(sensorIDs)
     echo "DeviceID $device_id"
     new_beacon=$(cat $beacon_template_file | sed 's/"timestamp": 1571431290706/"timestamp": '"$time_stamp"'/g ; s/"celsius": 25.0/"celsius": '"$temperature.0"'/g ; s/"humidity": 50/"humidity": '"$humidity.0"'/g ; s/"duration": 245/"duration": '"$temp_duration"'/g ; s/"reportedTemperature": 25.0/"reportedTemperature": '"$temperature.0/g"'; s/"deviceId": "io-75"/"deviceId": "'"$device_id"'"/g ')
     echo $new_beacon  > new.json

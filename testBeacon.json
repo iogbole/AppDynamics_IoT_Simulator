@@ -1,45 +1,64 @@
 [
  {
   "deviceInfo": {
-   "deviceType": "io3",
+   "deviceType": "AWS AppStream",
    "deviceId": "io-75",
    "deviceName":"WeOne"
   },
   "versionInfo": {
-    "hardwareVersion": "Board Rev. 13A",
-    "firmwareVersion": "123.5.31",
-    "softwareVersion": "9.1.3",
-    "operatingSystemVersion": "Linux 13.4" 
+    "hardwareVersion": "Microsoft corp v1",
+    "firmwareVersion": "AWSAppStreamV2",
+    "softwareVersion": "Build20.4",
+    "operatingSystemVersion": "Windows10" 
   },
   "customEvents": [
     {
       "timestamp": 1571431290706,
-      "eventType": "Temperature Reading",
-      "eventSummary": "Temperature: 25° c",
+      "eventType": "Infra Monitoring",
+      "eventSummary": "CPU, Memory and Disk Metrics",
       "doubleProperties": {
-        "celsius": 25.0
+        "CPU": 1,
+        "Memory": 1,
+        "Disk": 1
+      },
+      "stringProperties": {
+        "User": "Paul Alan"
       }
     }
   ],
+
   "networkRequestEvents": [
-   {
-    "timestamp": 1571431290706,
-    "duration": 245,
-    "url": "https://api.company.com/v1/temperature",
-    "statusCode": 200,
-    "requestContentLength": 32,
-    "responseContentLength": 0,
-    "doubleProperties": {
-     "reportedTemperature": 25.0
+    {
+     "timestamp": 1571431290706,
+     "duration": 300,
+     "url": "https://onpremise.appd.com/network/health-check",
+     "statusCode": 200,
+     "requestContentLength": 32,
+     "responseContentLength": 0,
+     "stringProperties": {
+     "city": "Basingstoke",
+     "country": "UNITED KINGDOM",
+     "IP-Address": "90.252.56.242"
     }
-   }
-  ],
-  "errorEvents": [
-   {
-    "timestamp": 1571431290706,
-    "name": "SQLException",
-    "message": "open() failed because db is locked"
-   }
-  ]
+    }
+   ],
+   "errorEvents": [
+    {
+     "timestamp": 1571431290706,
+     "Source": "TREP",
+     "name": "TREP Exception",
+     "message": "TREP is unable to connect to the host service",
+     "Event ID" : "1006",
+     "Level" : "Error"
+    },
+    {
+      "timestamp": 1571431290706,
+      "name": "TradingApp Login Error",
+      "Source": "AppStream",
+      "message": "Unable to connect to RADIUS",
+      "Event ID" : "1004",
+      "Level" : "Critical"
+     }
+   ]
  }
 ]

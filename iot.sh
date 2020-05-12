@@ -16,8 +16,9 @@
 # ./iot.sh AB-CDE-FGH-IJK
 
 # use https://<your-hostname>:<port>/eumcollector/iot/v1' for onpremise eum 
-eum_host="https://iot-col.eum-appdynamics.com/eumcollector/iot/v1"
-#eum_host="http://4512controllernoss-vng-lyhv1owl.srv.ravcloud.com:7001/eumcollector/iot/v1"
+#eum_host="https://iot-col.eum-appdynamics.com/eumcollector/iot/v1"
+
+eum_host="http://ec2-54-68-249-239.us-west-2.compute.amazonaws.com:7001/eumcollector/iot/v1"
 
 app_key="$1"
 
@@ -47,10 +48,20 @@ else
 fi
 
 function sensorIDs {
-array[0]="io75d70d-a3f9-474b-bacf-0f4a57fa944a"
-array[1]="ap75d70d-a3f9-474b-bacf-0f4a57fa944b"
-array[2]="dy75d70d-a3f9-474b-bacf-0f4a57fa944c"
-array[3]="mc75d70d-a3f9-474b-bacf-0f4a57fa944d"
+array[0]="DESKTOP-TPICAP-01"
+array[1]="DESKTOP-TPICAP-02"
+array[2]="DESKTOP-TPICAP-03"
+array[3]="DESKTOP-TPICAP-04"
+size=${#array[@]}
+index=$(($RANDOM % $size))
+echo ${array[$index]}
+}
+
+function Users {
+array[0]="Paul Alan"
+array[1]="Luke Lucas"
+array[2]="John Doe"
+array[3]="I DDOKS"
 size=${#array[@]}
 index=$(($RANDOM % $size))
 echo ${array[$index]}
@@ -59,16 +70,18 @@ echo ${array[$index]}
 function send_telemetry {
     time_stamp=$(($(date +'%s * 1000 + %-N / 1000000')))
     echo "time in milliseconds $time_stamp"
-    temperature=${RANDOM:0:2}
-    humidity=${RANDOM:0:2}
-    temp_duration=${RANDOM:1:3}
+    CPU=${RANDOM:1:2}
+    Memory=${RANDOM:1:2}
+    Disk=${RANDOM:1:2}
+    name_attr=${RANDOM:0:1}
     device_id=$(sensorIDs)
+    user_names=$(Users)
     echo "DeviceID $device_id"
-    new_beacon=$(cat $beacon_template_file | sed 's/"timestamp": 1571431290706/"timestamp": '"$time_stamp"'/g ; s/"celsius": 25.0/"celsius": '"$temperature.0"'/g ; s/"humidity": 50/"humidity": '"$humidity.0"'/g ; s/"duration": 245/"duration": '"$temp_duration"'/g ; s/"reportedTemperature": 25.0/"reportedTemperature": '"$temperature.0/g"'; s/"deviceId": "io-75"/"deviceId": "'"$device_id"'"/g ')
+    new_beacon=$(cat $beacon_template_file | sed 's/"timestamp": 1571431290706/"timestamp": '"$time_stamp"'/g; s/"CPU": 1/"CPU": '"$CPU"'/g ; s/"Memory": 1/"Memory": '"$Memory"'/g; s/"Disk": 1/"Disk": '"$Disk"'/g ; s/"deviceId": "io-75"/"deviceId": "'"$device_id"'"/g; s/"deviceName":"WeOne"/"deviceName": "'"$device_id - $user_names "'"/g; s/"User": "Paul Alan"/"User": "'"$user_names"'"/g')
     echo $new_beacon  > new.json
     #new_validation=$(curl -s -o -X POST -d "$new_beacon" /dev/null -w '%{http_code}' $eum_host/application/$app_key/validate-beacons)
     #echo $new_validation
-    SEND_BEACON=$(curl -s -o -X POST -d "$new_beacon" /dev/null -w '%{http_code}' $eum_host/application/$app_key/beacons)
+    SEND_BEACON=$(curl -s -o -X POST -d "$new_beacon" /dev/null -w '%{http_code} %{size_request} %{size_upload}' $eum_host/application/$app_key/beacons)
     if [ "$SEND_BEACON" -eq 202 ]; then
     echo "Successfully sent telemetry to AppDynamics EUM Collector. Check your controller"
        echo "Press 'CTRL + C' to stop execution, otherwise it's going to send telemetry every minute."
@@ -78,6 +91,8 @@ function send_telemetry {
   fi 
 }
 
+ send_telemetry
+
 function validate_beacon {
   response_code=$(curl -s -o -X POST -d "@$1" /dev/null -w '%{http_code}' $eum_host/application/$app_key/validate-beacons) 
   echo "$response_code"
@@ -86,10 +101,11 @@ function validate_beacon {
 #check if AppKey is enabled 
  is_app_key_enabled=$(
     curl $eum_host/application/$app_key/enabled \
-        --write-out %{http_code} \
+        --write-out %{http_code} %{size_request} %{size_upload} \
         --silent \
         --output /dev/null \
     )
+
   if [ "$is_app_key_enabled" -ne 200 ]; then
     echo "AppKey isn't enabled, please double check that $app_key is correct \n HTTP STATUS CODE: $is_app_key_enabled  "
     exit 1

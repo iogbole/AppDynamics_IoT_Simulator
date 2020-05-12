@@ -48,10 +48,10 @@ else
 fi
 
 function sensorIDs {
-array[0]="DESKTOP-TPICAP-01"
-array[1]="DESKTOP-TPICAP-02"
-array[2]="DESKTOP-TPICAP-03"
-array[3]="DESKTOP-TPICAP-04"
+array[0]="DESKTOP-01"
+array[1]="DESKTOP-02"
+array[2]="DESKTOP-03"
+array[3]="DESKTOP-04"
 size=${#array[@]}
 index=$(($RANDOM % $size))
 echo ${array[$index]}
